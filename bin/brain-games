@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+
+use function Brain\Games\Cli\run;
+
+define('ROOT_PATH', dirname(__DIR__, 1));
+require_once ROOT_PATH . '/vendor/autoload.php';
+
+run();

@@ -1,0 +1,28 @@
+{
+    "name": "hexlet/code",
+    "description": "Brain Games is a set of five console games, built on the principle of popular mobile brain training applications.",
+    "bin": [
+        "bin/brain-games"
+    ],
+    "scripts": {
+        "phpcs": "phpcs"
+    },
+    "authors": [
+        {
+            "name": "Alexey Ponomarev",
+            "email": "taponomarev@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "wp-cli/php-cli-tools": "^0.11.11"
+    },
+    "autoload": {
+        "files": [
+            "src/Cli.php"
+        ]
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.5"
+    }
+}

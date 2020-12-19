@@ -1,0 +1,28 @@
+name: Linter
+
+on: push
+
+jobs:
+  start-linter:
+    runs-on: ubuntu-20.04
+    steps:
+      # Check-out repository under GitHub workspace
+        # https://github.com/actions/checkout
+      - uses: actions/checkout@v2
+        # Step's name
+      - name: Setup PHP
+        # Action gives to setup the PHP environment to test application
+        # https://github.com/shivammathur/setup-php
+        uses: shivammathur/setup-php@v2
+        with:
+          # Specify the PHP version
+          php-version: '7.4'
+      - name: Install
+        # Install project
+        run: make install
+      - name: Run linter
+        # Run Linter
+        run: make lint
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
