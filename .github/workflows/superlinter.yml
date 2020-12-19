@@ -1,0 +1,12 @@
+name: Linter
+
+on: push
+
+jobs:
+  start-linter:
+    steps:
+      - name: Run command make lint
+        run: make lint
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
