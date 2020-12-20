@@ -6,3 +6,9 @@
 
 ### Github Actions Badge
 [![Github Actions Status](https://github.com/taponomarev/php-project-lvl1/workflows/Linter/badge.svg)](https://github.com/taponomarev/php-project-lvl1/actions)
+
+## Setup
+
+-   make install `https://asciinema.org/a/EDuVOQhfXnYt5DmYWQaUCIfl4`
+-   Brain game (even) success result `https://asciinema.org/a/W15HQkmnZrQvxAW8yEpP6wTDf`
+-   Brain game (even) wrong result `https://asciinema.org/a/YYoyzqTgzvY2UkL4L0mjW9hCX`
