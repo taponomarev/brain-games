@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+
+define('ROOT_PATH', dirname(__DIR__, 1));
+require_once ROOT_PATH . '/vendor/autoload.php';
+
+\Brain\Games\BrainCalc\runGame();

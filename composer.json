@@ -3,7 +3,9 @@
     "description": "Brain Games is a set of five console games, built on the principle of popular mobile brain training applications.",
     "bin": [
         "bin/brain-games",
-        "bin/brain-even"
+        "bin/brain-even",
+        "bin/brain-calc",
+        "bin/brain-engine"
     ],
     "scripts": {
         "phpcs": "phpcs"
@@ -21,7 +23,10 @@
     "autoload": {
         "files": [
             "src/Cli.php",
-            "src/BrainEven.php"
+            "src/Engine.php",
+            "src/Utils.php",
+            "src/Games/BrainEven.php",
+            "src/Games/BrainCalc.php"
         ]
     },
     "require-dev": {
