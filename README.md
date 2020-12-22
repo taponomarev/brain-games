@@ -13,4 +13,5 @@
 -   Brain game (even) success result (https://asciinema.org/a/W15HQkmnZrQvxAW8yEpP6wTDf)
 -   Brain game (even) wrong result (https://asciinema.org/a/YYoyzqTgzvY2UkL4L0mjW9hCX)
 -   Brain game (prime) (https://asciinema.org/a/S3F0V0NoNURaGvsbnY1JKOzBG)
+-   Brain game (gcd) (https://asciinema.org/a/WwWcCCg6jJMeg5GbTbis2Vebr)
 -   Brain game Engine (https://asciinema.org/a/zMNoouh2AZ6On05PSzIgAuVmw)

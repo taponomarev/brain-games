@@ -6,15 +6,11 @@ use function cli\line;
 use function cli\prompt;
 use function cli\err;
 use function Brain\Data\getMaxLevel;
+use function Brain\Data\getGames;
 
 function start(string $defaultGame)
 {
-    $games = [
-        'Brain\Games\BrainEven\runGame',
-        'Brain\Games\BrainCalc\runGame',
-        'Brain\Games\BrainPrime\runGame'
-    ];
-
+    $games = getGames();
     if ($defaultGame) {
         $games = [$defaultGame];
     }

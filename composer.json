@@ -6,6 +6,7 @@
         "bin/brain-even",
         "bin/brain-calc",
         "bin/brain-prime",
+        "bin/brain-gcd",
         "bin/brain-engine"
     ],
     "scripts": {
@@ -29,6 +30,7 @@
             "src/Data.php",
             "src/Games/BrainEven.php",
             "src/Games/BrainCalc.php",
+            "src/Games/BrainGcd.php",
             "src/Games/BrainPrime.php"
         ]
     },
