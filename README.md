@@ -12,4 +12,5 @@
 -   make install (https://asciinema.org/a/EDuVOQhfXnYt5DmYWQaUCIfl4)
 -   Brain game (even) success result (https://asciinema.org/a/W15HQkmnZrQvxAW8yEpP6wTDf)
 -   Brain game (even) wrong result (https://asciinema.org/a/YYoyzqTgzvY2UkL4L0mjW9hCX)
--   Bran game Engine (https://asciinema.org/a/zMNoouh2AZ6On05PSzIgAuVmw)
+-   Brain game (prime) (https://asciinema.org/a/S3F0V0NoNURaGvsbnY1JKOzBG)
+-   Brain game Engine (https://asciinema.org/a/zMNoouh2AZ6On05PSzIgAuVmw)

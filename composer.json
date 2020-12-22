@@ -5,6 +5,7 @@
         "bin/brain-games",
         "bin/brain-even",
         "bin/brain-calc",
+        "bin/brain-prime",
         "bin/brain-engine"
     ],
     "scripts": {
@@ -25,8 +26,10 @@
             "src/Cli.php",
             "src/Engine.php",
             "src/Utils.php",
+            "src/Data.php",
             "src/Games/BrainEven.php",
-            "src/Games/BrainCalc.php"
+            "src/Games/BrainCalc.php",
+            "src/Games/BrainPrime.php"
         ]
     },
     "require-dev": {

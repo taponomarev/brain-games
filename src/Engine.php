@@ -5,13 +5,20 @@ namespace Brain\Engine;
 use function cli\line;
 use function cli\prompt;
 use function cli\err;
+use function Brain\Data\getMaxLevel;
 
-function start()
+function start(string $defaultGame)
 {
     $games = [
         'Brain\Games\BrainEven\runGame',
-        'Brain\Games\BrainCalc\runGame'
+        'Brain\Games\BrainCalc\runGame',
+        'Brain\Games\BrainPrime\runGame'
     ];
+
+    if ($defaultGame) {
+        $games = [$defaultGame];
+    }
+
     $isGameOver = false;
 
     line('Welcome to the Brain Games!');
@@ -20,11 +27,12 @@ function start()
         line("Hello, %s!", $name);
 
         foreach ($games as $game) {
-            $attempts = 3;
+            $rounds = getMaxLevel();
+            $maxLevel = getMaxLevel();
 
-            while ($attempts && !$isGameOver) {
-                $isGameOver = $game($attempts === 3 ? true : false);
-                $attempts--;
+            while ($rounds && !$isGameOver) {
+                $isGameOver = $game($maxLevel === $rounds);
+                $rounds--;
             }
 
             if ($isGameOver) {
