@@ -11,6 +11,7 @@ use function Brain\Data\getGames;
 function start(string $defaultGame)
 {
     $games = getGames();
+
     if ($defaultGame) {
         $games = [$defaultGame];
     }

@@ -7,6 +7,7 @@
         "bin/brain-calc",
         "bin/brain-prime",
         "bin/brain-gcd",
+        "bin/brain-progression",
         "bin/brain-engine"
     ],
     "scripts": {
@@ -31,7 +32,8 @@
             "src/Games/BrainEven.php",
             "src/Games/BrainCalc.php",
             "src/Games/BrainGcd.php",
-            "src/Games/BrainPrime.php"
+            "src/Games/BrainPrime.php",
+            "src/Games/BrainProgression.php"
         ]
     },
     "require-dev": {

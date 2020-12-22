@@ -21,6 +21,9 @@ brain-gcd:
 brain-prime:
 	./bin/brain-prime
 
+brain-progression:
+	./bin/brain-progression
+
 brain-engine:
 	./bin/brain-engine
 
