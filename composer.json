@@ -2,7 +2,13 @@
     "name": "hexlet/code",
     "description": "Brain Games is a set of five console games, built on the principle of popular mobile brain training applications.",
     "bin": [
-        "bin/brain-games"
+        "bin/brain-games",
+        "bin/brain-even",
+        "bin/brain-calc",
+        "bin/brain-prime",
+        "bin/brain-gcd",
+        "bin/brain-progression",
+        "bin/brain-engine"
     ],
     "scripts": {
         "phpcs": "phpcs"
@@ -19,7 +25,15 @@
     },
     "autoload": {
         "files": [
-            "src/Cli.php"
+            "src/Cli.php",
+            "src/Engine.php",
+            "src/Utils.php",
+            "src/Data.php",
+            "src/Games/BrainEven.php",
+            "src/Games/BrainCalc.php",
+            "src/Games/BrainGcd.php",
+            "src/Games/BrainPrime.php",
+            "src/Games/BrainProgression.php"
         ]
     },
     "require-dev": {
