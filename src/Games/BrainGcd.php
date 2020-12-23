@@ -23,7 +23,7 @@ function showWelcomeMessage()
 
 function getGcd($firstNumber, $secondNumber)
 {
-    return gmp_gcd($firstNumber, $secondNumber);
+    return \gmp_gcd($firstNumber, $secondNumber);
 }
 
 function getCorrectAnswer($firstNumber, $secondNumber)
