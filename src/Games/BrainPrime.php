@@ -36,7 +36,7 @@ function askAQuestion()
     $randomNumber = getRandomNumber();
 
     try {
-        $answer = prompt('Question: ', $randomNumber);
+        $answer = prompt("Question: {$randomNumber}");
         $correctAnswer = getCorrectAnswer($randomNumber);
 
         if ($answer === $correctAnswer) {

@@ -27,9 +27,9 @@ function getRandomExpression()
 
     $firstNumber = getRandomNumber();
     $secondNumber = getRandomNumber();
-    $operand = $operations[rand(0, count($operations) - 1)];
+    $operation = $operations[rand(0, count($operations) - 1)];
 
-    return [$firstNumber, $secondNumber, $operand];
+    return [$firstNumber, $secondNumber, $operation];
 }
 
 function askAQuestion()
@@ -37,7 +37,7 @@ function askAQuestion()
     [$firstNumber, $secondNumber, $operation] = getRandomExpression();
 
     try {
-        $answer = prompt('Question: ', "{$firstNumber} {$operation} {$secondNumber}");
+        $answer = prompt("Question {$firstNumber} {$operation} {$secondNumber}");
         $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber, $operation);
 
         if ($answer === $correctAnswer) {

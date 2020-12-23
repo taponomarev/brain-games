@@ -24,6 +24,7 @@ function showWelcomeMessage()
 function getProgression()
 {
     $progressionLength = 10;
+    $progressionSymbol = '..';
     $firstNumber = getRandomNumber();
     $progressionDistance = rand(1, $progressionLength);
     $progression = [$firstNumber];
@@ -36,7 +37,7 @@ function getProgression()
 
     $randIdx = rand(0, $progressionLength - 1);
     $randNumber = $progression[$randIdx];
-    $progression[$randIdx] = '...';
+    $progression[$randIdx] = $progressionSymbol;
     return [
         implode(" ", $progression),
         $randNumber
@@ -48,7 +49,7 @@ function askAQuestion()
     [$progression, $correctAnswer] = getProgression();
 
     try {
-        $answer = prompt('Question: ', $progression);
+        $answer = prompt("Question: {$progression}");
 
         if ($answer == $correctAnswer) {
             line('Correct!');
