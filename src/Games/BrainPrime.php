@@ -23,7 +23,7 @@ function showWelcomeMessage()
 
 function isPrime($number): bool
 {
-    return gmp_prob_prime($number);
+    return \gmp_prob_prime($number);
 }
 
 function getCorrectAnswer($number): string
