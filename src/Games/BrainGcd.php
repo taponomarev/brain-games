@@ -37,7 +37,7 @@ function askAQuestion()
     $secondNumber = getRandomNumber();
 
     try {
-        $answer = prompt("Question {$firstNumber} {$secondNumber}");
+        $answer = prompt("Question: {$firstNumber} {$secondNumber}");
         $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber);
 
         if ($answer == $correctAnswer) {
