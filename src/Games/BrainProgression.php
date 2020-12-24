@@ -2,23 +2,36 @@
 
 namespace Brain\Games\BrainProgression;
 
-use function cli\line;
-use function cli\prompt;
-use function cli\err;
 use function Brain\Utils\getRandomNumber;
+use function Brain\Engine\run;
+use function Brain\Engine\askQuestion;
+use function Brain\Engine\showWelcomeMessage;
+use function Brain\Engine\checkAnswersToMatch;
+use function Brain\Engine\showSuccessMessage;
+use function Brain\Engine\showErrorMessage;
 
-function runGame($showWelcomeMessage = false)
+function startGame()
 {
-    if ($showWelcomeMessage) {
-        showWelcomeMessage();
-    }
+    $welcomeMsg = 'What number is missing in the progression?';
+    $manageGame = function ($showWelcomeMessage = false) use ($welcomeMsg) {
+        if ($showWelcomeMessage) {
+            showWelcomeMessage($welcomeMsg);
+        }
 
-    return askAQuestion();
-}
+        [$progression, $correctAnswer] = getProgression();
+        $userAnswer = askQuestion("Question: {$progression}");
+        $errorMsg = "'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'";
 
-function showWelcomeMessage()
-{
-    line('What number is missing in the progression?');
+        if (checkAnswersToMatch($userAnswer, $correctAnswer)) {
+            showSuccessMessage();
+            return false;
+        } else {
+            showErrorMessage($errorMsg);
+            return true;
+        }
+    };
+
+    run($manageGame);
 }
 
 function getProgression()
@@ -42,23 +55,4 @@ function getProgression()
         implode(" ", $progression),
         $randNumber
     ];
-}
-
-function askAQuestion()
-{
-    [$progression, $correctAnswer] = getProgression();
-
-    try {
-        $answer = prompt("Question: {$progression}");
-
-        if ($answer == $correctAnswer) {
-            line('Correct!');
-        } else {
-            line("'{$answer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'");
-            return true;
-        }
-    } catch (\Exception $e) {
-        err($e->getMessage());
-        return true;
-    }
 }

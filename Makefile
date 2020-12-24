@@ -24,8 +24,5 @@ brain-prime:
 brain-progression:
 	./bin/brain-progression
 
-brain-engine:
-	./bin/brain-engine
-
 lint:
 	composer run-script phpcs -- --standard=PSR12 src bin	

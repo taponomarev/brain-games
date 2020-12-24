@@ -2,23 +2,39 @@
 
 namespace Brain\Games\BrainCalc;
 
-use function cli\line;
-use function cli\prompt;
-use function cli\err;
+use Exception;
+
 use function Brain\Utils\getRandomNumber;
+use function Brain\Engine\run;
+use function Brain\Engine\askQuestion;
+use function Brain\Engine\showWelcomeMessage;
+use function Brain\Engine\checkAnswersToMatch;
+use function Brain\Engine\showSuccessMessage;
+use function Brain\Engine\showErrorMessage;
 
-function runGame($showWelcomeMessage = false)
+function startGame()
 {
-    if ($showWelcomeMessage) {
-        showWelcomeMessage();
-    }
+    $welcomeMsg = 'What is the result of the expression?';
+    $manageGame = function ($showWelcomeMessage = false) use ($welcomeMsg) {
+        if ($showWelcomeMessage) {
+            showWelcomeMessage($welcomeMsg);
+        }
 
-    return askAQuestion();
-}
+        [$firstNumber, $secondNumber, $operation] = getRandomExpression();
+        $userAnswer = askQuestion("Question: {$firstNumber} {$operation} {$secondNumber}");
+        $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber, $operation);
+        $errorMsg = "'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'";
 
-function showWelcomeMessage()
-{
-    line('What is the result of the expression?');
+        if (checkAnswersToMatch($userAnswer, $correctAnswer)) {
+            showSuccessMessage();
+            return false;
+        } else {
+            showErrorMessage($errorMsg);
+            return true;
+        }
+    };
+
+    run($manageGame);
 }
 
 function getRandomExpression()
@@ -30,26 +46,6 @@ function getRandomExpression()
     $operation = $operations[rand(0, count($operations) - 1)];
 
     return [$firstNumber, $secondNumber, $operation];
-}
-
-function askAQuestion()
-{
-    [$firstNumber, $secondNumber, $operation] = getRandomExpression();
-
-    try {
-        $answer = prompt("Question: {$firstNumber} {$operation} {$secondNumber}");
-        $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber, $operation);
-
-        if ($answer === $correctAnswer) {
-            line('Correct!');
-        } else {
-            line("'{$answer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'");
-            return true;
-        }
-    } catch (\Exception $e) {
-        err($e->getMessage());
-        return true;
-    }
 }
 
 function getCorrectAnswer($firstNumber, $secondNumber, $operation): string
@@ -64,5 +60,7 @@ function getCorrectAnswer($firstNumber, $secondNumber, $operation): string
         case '*':
             return $firstNumber * $secondNumber;
             break;
+        default:
+            throw new Exception("Unknown operation state: '{$operation}'!");
     }
 }

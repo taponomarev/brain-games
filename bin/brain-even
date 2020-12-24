@@ -4,5 +4,4 @@
 define('ROOT_PATH', dirname(__DIR__, 1));
 require_once ROOT_PATH . '/vendor/autoload.php';
 
-$pathToGame = 'Brain\Games\BrainEven\runGame';
-\Brain\Engine\start($pathToGame);
+\Brain\Games\BrainEven\startGame();
