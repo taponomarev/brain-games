@@ -19,17 +19,31 @@ function run($game)
     $maxLevel = getMaxLevel();
 
     while ($rounds && !$isGameOver) {
-        $isGameOver = $game($rounds === $maxLevel ? true : false);
+        ['expression' => $expression, 'correctAnswer' => $correctAnswer, 'welcomeMsg' => $welcomeMsg] = $game();
+
+        if ($rounds === $maxLevel) {
+            showWelcomeMessage($welcomeMsg);
+        }
+
+        $isGameOver = askQuestion($expression, $correctAnswer);
         $rounds--;
     }
 
     !$isGameOver ? winGame($name) : gameOver($name);
 }
 
-function askQuestion(string $question)
+function askQuestion(string $expression, string $correctAnswer): bool
 {
-    $userAnswer = prompt($question);
-    return $userAnswer;
+    $userAnswer = prompt("Question: {$expression}");
+    $errorMsg = "'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'";
+
+    if (checkAnswersToMatch($userAnswer, $correctAnswer)) {
+        showSuccessMessage();
+        return false;
+    } else {
+        showErrorMessage($errorMsg);
+        return true;
+    }
 }
 
 function checkAnswersToMatch(string $userAnswer, string $correctAnswer): bool

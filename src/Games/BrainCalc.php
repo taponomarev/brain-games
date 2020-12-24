@@ -6,38 +6,26 @@ use Exception;
 
 use function Brain\Utils\getRandomNumber;
 use function Brain\Engine\run;
-use function Brain\Engine\askQuestion;
-use function Brain\Engine\showWelcomeMessage;
-use function Brain\Engine\checkAnswersToMatch;
-use function Brain\Engine\showSuccessMessage;
-use function Brain\Engine\showErrorMessage;
 
 function startGame()
 {
-    $welcomeMsg = 'What is the result of the expression?';
-    $manageGame = function ($showWelcomeMessage = false) use ($welcomeMsg) {
-        if ($showWelcomeMessage) {
-            showWelcomeMessage($welcomeMsg);
-        }
-
+    $manageGame = function () {
+        $welcomeMsg = 'What is the result of the expression?';
         [$firstNumber, $secondNumber, $operation] = getRandomExpression();
-        $userAnswer = askQuestion("Question: {$firstNumber} {$operation} {$secondNumber}");
+        $expression = "{$firstNumber} {$operation} {$secondNumber}";
         $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber, $operation);
-        $errorMsg = "'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'";
 
-        if (checkAnswersToMatch($userAnswer, $correctAnswer)) {
-            showSuccessMessage();
-            return false;
-        } else {
-            showErrorMessage($errorMsg);
-            return true;
-        }
+        return [
+            'expression' => $expression,
+            'correctAnswer' => $correctAnswer,
+            'welcomeMsg' => $welcomeMsg
+        ];
     };
 
     run($manageGame);
 }
 
-function getRandomExpression()
+function getRandomExpression(): array
 {
     $operations = ['+', '-', '*'];
 
@@ -48,7 +36,7 @@ function getRandomExpression()
     return [$firstNumber, $secondNumber, $operation];
 }
 
-function getCorrectAnswer($firstNumber, $secondNumber, $operation): string
+function getCorrectAnswer(string $firstNumber, string $secondNumber, string $operation): string
 {
     switch ($operation) {
         case '+':

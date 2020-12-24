@@ -4,43 +4,30 @@ namespace Brain\Games\BrainEven;
 
 use function Brain\Utils\getRandomNumber;
 use function Brain\Engine\run;
-use function Brain\Engine\askQuestion;
-use function Brain\Engine\showWelcomeMessage;
-use function Brain\Engine\checkAnswersToMatch;
-use function Brain\Engine\showSuccessMessage;
-use function Brain\Engine\showErrorMessage;
 
 function startGame()
 {
-    $welcomeMsg = 'Answer "yes" if the number is even, otherwise answer "no".';
-    $manageGame = function ($showWelcomeMessage = false) use ($welcomeMsg) {
-        if ($showWelcomeMessage) {
-            showWelcomeMessage($welcomeMsg);
-        }
+    $manageGame = function () {
+        $welcomeMsg = 'Answer "yes" if the number is even, otherwise answer "no".';
+        $expression = getRandomNumber();
+        $correctAnswer = getCorrectAnswer($expression);
 
-        $randomNumber = getRandomNumber();
-        $userAnswer = askQuestion("Question: {$randomNumber}");
-        $correctAnswer = getCorrectAnswer($randomNumber);
-        $errorMsg = "'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'";
-
-        if (checkAnswersToMatch($userAnswer, $correctAnswer)) {
-            showSuccessMessage();
-            return false;
-        } else {
-            showErrorMessage($errorMsg);
-            return true;
-        }
+        return [
+            'expression' => $expression,
+            'correctAnswer' => $correctAnswer,
+            'welcomeMsg' => $welcomeMsg
+        ];
     };
 
     run($manageGame);
 }
 
-function isEven($number)
+function isEven(string $number)
 {
     return $number % 2 === 0;
 }
 
-function getCorrectAnswer($number): string
+function getCorrectAnswer(string $number): string
 {
     return isEven($number) ? 'yes' : 'no';
 }

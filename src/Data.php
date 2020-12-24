@@ -2,7 +2,7 @@
 
 namespace Brain\Data;
 
-function getMaxLevel()
+function getMaxLevel(): int
 {
     return 3;
 }

@@ -2,7 +2,7 @@
 
 namespace Brain\Utils;
 
-function getRandomNumber($minNumber = 1, $maxNumber = 100)
+function getRandomNumber(int $minNumber = 1, int $maxNumber = 100): int
 {
     return rand($minNumber, $maxNumber);
 }
