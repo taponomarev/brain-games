@@ -2,57 +2,41 @@
 
 namespace Brain\Games\BrainCalc;
 
-use function cli\line;
-use function cli\prompt;
-use function cli\err;
+use Exception;
+
 use function Brain\Utils\getRandomNumber;
+use function Brain\Engine\run;
 
-function runGame($showWelcomeMessage = false)
+function startGame()
 {
-    if ($showWelcomeMessage) {
-        showWelcomeMessage();
-    }
+    $manageGame = function () {
+        $welcomeMsg = 'What is the result of the expression?';
+        [$firstNumber, $secondNumber, $operation] = getRandomExpression();
+        $expression = "{$firstNumber} {$operation} {$secondNumber}";
+        $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber, $operation);
 
-    return askAQuestion();
+        return [
+            'expression' => $expression,
+            'correctAnswer' => $correctAnswer,
+            'welcomeMsg' => $welcomeMsg
+        ];
+    };
+
+    run($manageGame);
 }
 
-function showWelcomeMessage()
-{
-    line('What is the result of the expression?');
-}
-
-function getRandomExpression()
+function getRandomExpression(): array
 {
     $operations = ['+', '-', '*'];
 
     $firstNumber = getRandomNumber();
     $secondNumber = getRandomNumber();
-    $operand = $operations[rand(0, count($operations) - 1)];
+    $operation = $operations[rand(0, count($operations) - 1)];
 
-    return [$firstNumber, $secondNumber, $operand];
+    return [$firstNumber, $secondNumber, $operation];
 }
 
-function askAQuestion()
-{
-    [$firstNumber, $secondNumber, $operation] = getRandomExpression();
-
-    try {
-        $answer = prompt('Question: ', "{$firstNumber} {$operation} {$secondNumber}");
-        $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber, $operation);
-
-        if ($answer === $correctAnswer) {
-            line('Correct!');
-        } else {
-            line("'{$answer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'");
-            return true;
-        }
-    } catch (\Exception $e) {
-        err($e->getMessage());
-        return true;
-    }
-}
-
-function getCorrectAnswer($firstNumber, $secondNumber, $operation): string
+function getCorrectAnswer(string $firstNumber, string $secondNumber, string $operation): string
 {
     switch ($operation) {
         case '+':
@@ -64,5 +48,7 @@ function getCorrectAnswer($firstNumber, $secondNumber, $operation): string
         case '*':
             return $firstNumber * $secondNumber;
             break;
+        default:
+            throw new Exception("Unknown operation state: '{$operation}'!");
     }
 }

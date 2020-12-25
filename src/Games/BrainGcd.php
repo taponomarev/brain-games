@@ -2,52 +2,43 @@
 
 namespace Brain\Games\BrainGcd;
 
-use function cli\line;
-use function cli\prompt;
-use function cli\err;
 use function Brain\Utils\getRandomNumber;
+use function Brain\Engine\run;
 
-function runGame($showWelcomeMessage = false)
+function startGame()
 {
-    if ($showWelcomeMessage) {
-        showWelcomeMessage();
-    }
-
-    return askAQuestion();
-}
-
-function showWelcomeMessage()
-{
-    line('Find the greatest common divisor of given numbers.');
-}
-
-function getGcd($firstNumber, $secondNumber)
-{
-    return gmp_gcd($firstNumber, $secondNumber);
-}
-
-function getCorrectAnswer($firstNumber, $secondNumber)
-{
-    return getGcd($firstNumber, $secondNumber);
-}
-
-function askAQuestion()
-{
-    $firstNumber = getRandomNumber();
-    $secondNumber = getRandomNumber();
-
-    try {
-        $answer = prompt('Question: ', "{$firstNumber} {$secondNumber}");
+    $manageGame = function () {
+        $welcomeMsg = 'Find the greatest common divisor of given numbers.';
+        $firstNumber = getRandomNumber();
+        $secondNumber = getRandomNumber();
+        $expression = "{$firstNumber} {$secondNumber}";
         $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber);
 
-        if ($answer == $correctAnswer) {
-            line('Correct!');
-        } else {
-            line("'{$answer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'");
-            return true;
+        return [
+            'expression' => $expression,
+            'correctAnswer' => $correctAnswer,
+            'welcomeMsg' => $welcomeMsg
+        ];
+    };
+
+    run($manageGame);
+}
+
+function getCorrectAnswer(string $firstNumber, string $secondNumber): int
+{
+    return calculateDenom($firstNumber, $secondNumber);
+}
+
+function calculateDenom(string $firstNumber, string $secondNumber): int
+{
+    $minNumberSize = $firstNumber < $secondNumber ? $firstNumber : $secondNumber;
+    $denom = 1;
+
+    for ($i = 1; $i <= $minNumberSize; $i++) {
+        if ($firstNumber % $i === 0 && $secondNumber % $i === 0) {
+            $denom = $i;
         }
-    } catch (\Exception $e) {
-        err($e->getMessage());
-        return true;
     }
+
+    return $denom;
 }

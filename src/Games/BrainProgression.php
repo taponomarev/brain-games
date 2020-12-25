@@ -2,62 +2,44 @@
 
 namespace Brain\Games\BrainProgression;
 
-use function cli\line;
-use function cli\prompt;
-use function cli\err;
 use function Brain\Utils\getRandomNumber;
+use function Brain\Engine\run;
 
-function runGame($showWelcomeMessage = false)
+function startGame()
 {
-    if ($showWelcomeMessage) {
-        showWelcomeMessage();
-    }
+    $manageGame = function () {
+        $welcomeMsg = 'What number is missing in the progression?';
+        [$expression, $correctAnswer] = getProgression();
 
-    return askAQuestion();
+        return [
+            'expression' => $expression,
+            'correctAnswer' => $correctAnswer,
+            'welcomeMsg' => $welcomeMsg
+        ];
+    };
+
+    run($manageGame);
 }
 
-function showWelcomeMessage()
+function getProgression(): array
 {
-    line('What number is missing in the progression?');
-}
+    $progressionMinLength = 5;
+    $progressionMaxLength = 15;
+    $stepMinLength = 1;
+    $stepMaxNLength = 10;
+    $progressionSymbol = '..';
 
-function getProgression()
-{
-    $progressionLength = 10;
-    $firstNumber = getRandomNumber();
-    $progressionDistance = rand(1, $progressionLength);
-    $progression = [$firstNumber];
-
-    for ($i = 0; $i < $progressionLength; $i++) {
-        $lastNumber = $progression[count($progression) - 1];
-        $nextNumber = $lastNumber + $progressionDistance;
-        array_push($progression, $nextNumber);
-    }
-
-    $randIdx = rand(0, $progressionLength - 1);
+    $step = getRandomNumber($stepMinLength, $stepMaxNLength);
+    $progressionLength = getRandomNumber($progressionMinLength, $progressionMaxLength);
+    $progressionFirstNumber = getRandomNumber();
+    $progressionLastNumber = ($progressionLength * $step) + ($progressionFirstNumber - $step);
+    $progression = range($progressionFirstNumber, $progressionLastNumber, $step);
+    $randIdx = getRandomNumber(0, count($progression) - 1);
     $randNumber = $progression[$randIdx];
-    $progression[$randIdx] = '...';
+    $progression[$randIdx] = $progressionSymbol;
+
     return [
         implode(" ", $progression),
         $randNumber
     ];
-}
-
-function askAQuestion()
-{
-    [$progression, $correctAnswer] = getProgression();
-
-    try {
-        $answer = prompt('Question: ', $progression);
-
-        if ($answer == $correctAnswer) {
-            line('Correct!');
-        } else {
-            line("'{$answer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'");
-            return true;
-        }
-    } catch (\Exception $e) {
-        err($e->getMessage());
-        return true;
-    }
 }

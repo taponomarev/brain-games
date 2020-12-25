@@ -2,51 +2,39 @@
 
 namespace Brain\Games\BrainPrime;
 
-use function cli\line;
-use function cli\prompt;
-use function cli\err;
 use function Brain\Utils\getRandomNumber;
+use function Brain\Engine\run;
 
-function runGame($showWelcomeMessage = false)
+function startGame()
 {
-    if ($showWelcomeMessage) {
-        showWelcomeMessage();
-    }
+    $manageGame = function () {
+        $welcomeMsg = 'Answer "yes" if given number is prime. Otherwise answer "no".';
+        $minPrimeNumber = 1;
+        $maxPrimeNumber = 50;
+        $expression = getRandomNumber($minPrimeNumber, $maxPrimeNumber);
+        $correctAnswer = getCorrectAnswer($expression);
 
-    return askAQuestion();
+        return [
+            'expression' => $expression,
+            'correctAnswer' => $correctAnswer,
+            'welcomeMsg' => $welcomeMsg
+        ];
+    };
+
+    run($manageGame);
 }
 
-function showWelcomeMessage()
+function hasPrime(string $number): bool
 {
-    line('Answer "yes" if given number is prime. Otherwise answer "no".');
-}
-
-function isPrime($number): bool
-{
-    return gmp_prob_prime($number);
-}
-
-function getCorrectAnswer($number): string
-{
-    return isPrime($number) ? 'yes' : 'no';
-}
-
-function askAQuestion()
-{
-    $randomNumber = getRandomNumber();
-
-    try {
-        $answer = prompt('Question: ', $randomNumber);
-        $correctAnswer = getCorrectAnswer($randomNumber);
-
-        if ($answer === $correctAnswer) {
-            line('Correct!');
-        } else {
-            line("'{$answer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'");
-            return true;
+    for ($i = 3; $i <= $number; $i++) {
+        if ($number % $i === 0) {
+            return false;
         }
-    } catch (\Exception $e) {
-        err($e->getMessage());
-        return true;
     }
+    return true;
+}
+
+function getCorrectAnswer(string $number): string
+{
+    return hasPrime($number) ? 'yes' : 'no';
 }

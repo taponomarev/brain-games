@@ -6,49 +6,72 @@ use function cli\line;
 use function cli\prompt;
 use function cli\err;
 use function Brain\Data\getMaxLevel;
-use function Brain\Data\getGames;
 
-function start(string $defaultGame)
+function run($game)
 {
-    $games = getGames();
-
-    if ($defaultGame) {
-        $games = [$defaultGame];
-    }
-
     $isGameOver = false;
 
     line('Welcome to the Brain Games!');
-    try {
-        $name = prompt('May I have your name?');
-        line("Hello, %s!", $name);
+    $name = prompt('May I have your name?');
+    line("Hello, %s!", $name);
 
-        foreach ($games as $game) {
-            $rounds = getMaxLevel();
-            $maxLevel = getMaxLevel();
+    $rounds = getMaxLevel();
+    $maxLevel = getMaxLevel();
 
-            while ($rounds && !$isGameOver) {
-                $isGameOver = $game($maxLevel === $rounds);
-                $rounds--;
-            }
+    while ($rounds && !$isGameOver) {
+        ['expression' => $expression, 'correctAnswer' => $correctAnswer, 'welcomeMsg' => $welcomeMsg] = $game();
 
-            if ($isGameOver) {
-                break;
-            }
+        if ($rounds === $maxLevel) {
+            showWelcomeMessage($welcomeMsg);
         }
 
-        !$isGameOver ? winGame($name) : gameOver($name);
-    } catch (\Exception $e) {
-        err($e->getMessage());
+        $isGameOver = askQuestion($expression, $correctAnswer);
+        $rounds--;
+    }
+
+    !$isGameOver ? winGame($name) : gameOver($name);
+}
+
+function askQuestion(string $expression, string $correctAnswer): bool
+{
+    $userAnswer = prompt("Question: {$expression}");
+    $errorMsg = "'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'";
+
+    if (checkAnswersToMatch($userAnswer, $correctAnswer)) {
+        showSuccessMessage();
+        return false;
+    } else {
+        showErrorMessage($errorMsg);
+        return true;
     }
 }
 
-function winGame($userName)
+function checkAnswersToMatch(string $userAnswer, string $correctAnswer): bool
+{
+    return $userAnswer == $correctAnswer;
+}
+
+function showWelcomeMessage(string $message)
+{
+    line($message);
+}
+
+function showSuccessMessage(string $message = 'Correct!')
+{
+    line($message);
+}
+
+function showErrorMessage(string $message)
+{
+    err($message);
+}
+
+function winGame(string $userName)
 {
     line("Congratulations, {$userName}");
 }
 
-function gameOver($userName)
+function gameOver(string $userName)
 {
     line("Let's try again, {$userName}!");
 }

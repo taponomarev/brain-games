@@ -2,51 +2,32 @@
 
 namespace Brain\Games\BrainEven;
 
-use function cli\line;
-use function cli\prompt;
-use function cli\err;
 use function Brain\Utils\getRandomNumber;
+use function Brain\Engine\run;
 
-function runGame($showWelcomeMessage = false)
+function startGame()
 {
-    if ($showWelcomeMessage) {
-        showWelcomeMessage();
-    }
+    $manageGame = function () {
+        $welcomeMsg = 'Answer "yes" if the number is even, otherwise answer "no".';
+        $expression = getRandomNumber();
+        $correctAnswer = getCorrectAnswer($expression);
 
-    return askAQuestion();
+        return [
+            'expression' => $expression,
+            'correctAnswer' => $correctAnswer,
+            'welcomeMsg' => $welcomeMsg
+        ];
+    };
+
+    run($manageGame);
 }
 
-function showWelcomeMessage()
-{
-    line('Answer "yes" if the number is even, otherwise answer "no".');
-}
-
-function isEven($number)
+function hasEven(string $number)
 {
     return $number % 2 === 0;
 }
 
-function getCorrectAnswer($number): string
+function getCorrectAnswer(string $number): string
 {
-    return isEven($number) ? 'yes' : 'no';
-}
-
-function askAQuestion()
-{
-    $randomNumber = getRandomNumber();
-
-    try {
-        $answer = prompt('Question: ', $randomNumber);
-        $correctAnswer = getCorrectAnswer($randomNumber);
-
-        if ($answer === $correctAnswer) {
-            line('Correct!');
-        } else {
-            line("'{$answer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'");
-            return true;
-        }
-    } catch (\Exception $e) {
-        err($e->getMessage());
-        return true;
-    }
+    return hasEven($number) ? 'yes' : 'no';
 }
