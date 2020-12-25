@@ -25,16 +25,16 @@ function getProgression(): array
 {
     $progressionMinLength = 5;
     $progressionMaxLength = 15;
-    $stepMin = 1;
-    $stepMax = 10;
+    $stepMinLength = 1;
+    $stepMaxNLength = 10;
     $progressionSymbol = '..';
 
-    $step = getRandomNumber($stepMin, $stepMax);
-    $progressionLength = rand($progressionMinLength, $progressionMaxLength);
-    $firstNumber = getRandomNumber();
-    $lastNumber = ($progressionLength * $step) + ($firstNumber - $step);
-    $progression = range($firstNumber, $lastNumber, $step);
-    $randIdx = rand(0, count($progression) - 1);
+    $step = getRandomNumber($stepMinLength, $stepMaxNLength);
+    $progressionLength = getRandomNumber($progressionMinLength, $progressionMaxLength);
+    $progressionFirstNumber = getRandomNumber();
+    $progressionLastNumber = ($progressionLength * $step) + ($progressionFirstNumber - $step);
+    $progression = range($progressionFirstNumber, $progressionLastNumber, $step);
+    $randIdx = getRandomNumber(0, count($progression) - 1);
     $randNumber = $progression[$randIdx];
     $progression[$randIdx] = $progressionSymbol;
 

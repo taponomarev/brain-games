@@ -22,12 +22,12 @@ function startGame()
     run($manageGame);
 }
 
-function isEven(string $number)
+function hasEven(string $number)
 {
     return $number % 2 === 0;
 }
 
 function getCorrectAnswer(string $number): string
 {
-    return isEven($number) ? 'yes' : 'no';
+    return hasEven($number) ? 'yes' : 'no';
 }

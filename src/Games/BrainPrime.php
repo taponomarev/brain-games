@@ -24,7 +24,7 @@ function startGame()
     run($manageGame);
 }
 
-function isPrime(string $number): bool
+function hasPrime(string $number): bool
 {
     for ($i = 3; $i <= $number; $i++) {
         if ($number % $i === 0) {
@@ -36,5 +36,5 @@ function isPrime(string $number): bool
 
 function getCorrectAnswer(string $number): string
 {
-    return isPrime($number) ? 'yes' : 'no';
+    return hasPrime($number) ? 'yes' : 'no';
 }
