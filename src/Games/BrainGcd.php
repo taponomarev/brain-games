@@ -4,23 +4,25 @@ namespace Brain\Games\BrainGcd;
 
 use function Brain\Engine\run;
 
+const DESCRIPTION = 'Find the greatest common divisor of given numbers.';
+
 function startGame()
 {
-    $manageGame = function () {
-        $welcomeMsg = 'Find the greatest common divisor of given numbers.';
-        $firstNumber = rand();
-        $secondNumber = rand();
+    $params = function () {
+        $minNumber = 1;
+        $maxNumber = 100;
+        $firstNumber = rand($minNumber, $maxNumber);
+        $secondNumber = rand($minNumber, $maxNumber);
         $expression = "{$firstNumber} {$secondNumber}";
         $correctAnswer = calculateDenom($firstNumber, $secondNumber);
 
         return [
             'expression' => $expression,
-            'correctAnswer' => $correctAnswer,
-            'welcomeMsg' => $welcomeMsg
+            'correctAnswer' => $correctAnswer
         ];
     };
 
-    run($manageGame);
+    run($params, DESCRIPTION);
 }
 
 function calculateDenom(string $firstNumber, string $secondNumber): int

@@ -4,24 +4,24 @@ namespace Brain\Games\BrainEven;
 
 use function Brain\Engine\run;
 
+const DESCRIPTION = 'Answer "yes" if the number is even, otherwise answer "no".';
+
 function startGame()
 {
-    $manageGame = function () {
-        $welcomeMsg = 'Answer "yes" if the number is even, otherwise answer "no".';
+    $params = function () {
         $expression = rand();
         $correctAnswer = getCorrectAnswer($expression);
 
         return [
             'expression' => $expression,
-            'correctAnswer' => $correctAnswer,
-            'welcomeMsg' => $welcomeMsg
+            'correctAnswer' => $correctAnswer
         ];
     };
 
-    run($manageGame);
+    run($params, DESCRIPTION);
 }
 
-function isEven(string $number)
+function isEven(string $number): bool
 {
     return $number % 2 === 0;
 }

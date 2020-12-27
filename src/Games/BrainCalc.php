@@ -6,22 +6,22 @@ use Exception;
 
 use function Brain\Engine\run;
 
+const DESCRIPTION = 'What is the result of the expression?';
+
 function startGame()
 {
-    $manageGame = function () {
-        $welcomeMsg = 'What is the result of the expression?';
+    $params = function () {
         [$firstNumber, $secondNumber, $operation] = getRandomExpression();
         $expression = "{$firstNumber} {$operation} {$secondNumber}";
         $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber, $operation);
 
         return [
             'expression' => $expression,
-            'correctAnswer' => $correctAnswer,
-            'welcomeMsg' => $welcomeMsg
+            'correctAnswer' => $correctAnswer
         ];
     };
 
-    run($manageGame);
+    run($params, DESCRIPTION);
 }
 
 function getRandomExpression(): array
