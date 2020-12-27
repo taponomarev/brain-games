@@ -5,73 +5,39 @@ namespace Brain\Engine;
 use function cli\line;
 use function cli\prompt;
 use function cli\err;
-use function Brain\Data\getMaxLevel;
 
-function run($game)
+function run(callable $game)
 {
-    $isGameOver = false;
 
     line('Welcome to the Brain Games!');
-    $name = prompt('May I have your name?');
-    line("Hello, %s!", $name);
-
-    $rounds = getMaxLevel();
-    $maxLevel = getMaxLevel();
-
-    while ($rounds && !$isGameOver) {
-        ['expression' => $expression, 'correctAnswer' => $correctAnswer, 'welcomeMsg' => $welcomeMsg] = $game();
-
-        if ($rounds === $maxLevel) {
-            showWelcomeMessage($welcomeMsg);
-        }
-
-        $isGameOver = askQuestion($expression, $correctAnswer);
-        $rounds--;
-    }
-
-    !$isGameOver ? winGame($name) : gameOver($name);
+    $username = prompt('May I have your name?');
+    line("Hello, %s!", $username);
+    tickGame($game, $username);
 }
 
-function askQuestion(string $expression, string $correctAnswer): bool
+function tickGame(callable $game, string $username, int $currentLevel = 3)
 {
+    if (!$currentLevel) {
+        line("Congratulations, {$username}");
+        return;
+    }
+
+    $maxLevel = 3;
+    ['expression' => $expression, 'correctAnswer' => $correctAnswer, 'welcomeMsg' => $welcomeMsg] = $game();
+
+    if ($currentLevel === $maxLevel) {
+        line($welcomeMsg);
+    }
+
     $userAnswer = prompt("Question: {$expression}");
     $errorMsg = "'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'";
 
-    if (checkAnswersToMatch($userAnswer, $correctAnswer)) {
-        showSuccessMessage();
-        return false;
+    if ($userAnswer == $correctAnswer) {
+        line('Correct!');
+        tickGame($game, $username, $currentLevel -= 1);
     } else {
-        showErrorMessage($errorMsg);
-        return true;
+        err($errorMsg);
+        err("Let's try again, {$username}!");
+        return;
     }
-}
-
-function checkAnswersToMatch(string $userAnswer, string $correctAnswer): bool
-{
-    return $userAnswer == $correctAnswer;
-}
-
-function showWelcomeMessage(string $message)
-{
-    line($message);
-}
-
-function showSuccessMessage(string $message = 'Correct!')
-{
-    line($message);
-}
-
-function showErrorMessage(string $message)
-{
-    err($message);
-}
-
-function winGame(string $userName)
-{
-    line("Congratulations, {$userName}");
-}
-
-function gameOver(string $userName)
-{
-    line("Let's try again, {$userName}!");
 }

@@ -27,8 +27,6 @@
         "files": [
             "src/Cli.php",
             "src/Engine.php",
-            "src/Utils.php",
-            "src/Data.php",
             "src/Games/BrainEven.php",
             "src/Games/BrainCalc.php",
             "src/Games/BrainGcd.php",
