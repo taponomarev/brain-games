@@ -4,20 +4,20 @@ namespace Brain\Games\BrainProgression;
 
 use function Brain\Engine\run;
 
+const DESCRIPTION = 'What number is missing in the progression?';
+
 function startGame()
 {
-    $manageGame = function () {
-        $welcomeMsg = 'What number is missing in the progression?';
+    $params = function () {
         [$expression, $correctAnswer] = getProgression();
 
         return [
             'expression' => $expression,
-            'correctAnswer' => $correctAnswer,
-            'welcomeMsg' => $welcomeMsg
+            'correctAnswer' => $correctAnswer
         ];
     };
 
-    run($manageGame);
+    run($params, DESCRIPTION);
 }
 
 function getProgression(): array

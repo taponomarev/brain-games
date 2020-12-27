@@ -7,8 +7,7 @@
         "bin/brain-calc",
         "bin/brain-prime",
         "bin/brain-gcd",
-        "bin/brain-progression",
-        "bin/brain-engine"
+        "bin/brain-progression"
     ],
     "scripts": {
         "phpcs": "phpcs"

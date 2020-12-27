@@ -4,10 +4,11 @@ namespace Brain\Games\BrainPrime;
 
 use function Brain\Engine\run;
 
+const DESCRIPTION = 'Answer "yes" if given number is prime. Otherwise answer "no".';
+
 function startGame()
 {
-    $manageGame = function () {
-        $welcomeMsg = 'Answer "yes" if given number is prime. Otherwise answer "no".';
+    $params = function () {
         $minPrimeNumber = 1;
         $maxPrimeNumber = 50;
         $expression = rand($minPrimeNumber, $maxPrimeNumber);
@@ -16,11 +17,11 @@ function startGame()
         return [
             'expression' => $expression,
             'correctAnswer' => $correctAnswer,
-            'welcomeMsg' => $welcomeMsg
+            'description' => DESCRIPTION
         ];
     };
 
-    run($manageGame);
+    run($params, DESCRIPTION);
 }
 
 function isPrime(string $number): bool

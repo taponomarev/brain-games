@@ -6,35 +6,31 @@ use function cli\line;
 use function cli\prompt;
 use function cli\err;
 
-function run(callable $game)
+function run(callable $params, string $description)
 {
 
     line('Welcome to the Brain Games!');
     $username = prompt('May I have your name?');
     line("Hello, %s!", $username);
-    tickGame($game, $username);
+    line($description);
+    tickGame($params, $username);
 }
 
-function tickGame(callable $game, string $username, int $currentLevel = 3)
+function tickGame(callable $params, string $username, int $currentLevel = 3)
 {
     if (!$currentLevel) {
         line("Congratulations, {$username}");
         return;
     }
 
-    $maxLevel = 3;
-    ['expression' => $expression, 'correctAnswer' => $correctAnswer, 'welcomeMsg' => $welcomeMsg] = $game();
-
-    if ($currentLevel === $maxLevel) {
-        line($welcomeMsg);
-    }
+    ['expression' => $expression, 'correctAnswer' => $correctAnswer] = $params();
 
     $userAnswer = prompt("Question: {$expression}");
     $errorMsg = "'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'";
 
     if ($userAnswer == $correctAnswer) {
         line('Correct!');
-        tickGame($game, $username, $currentLevel -= 1);
+        tickGame($params, $username, $currentLevel -= 1);
     } else {
         err($errorMsg);
         err("Let's try again, {$username}!");
