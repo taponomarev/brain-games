@@ -2,17 +2,16 @@
 
 namespace Brain\Games\BrainGcd;
 
-use function Brain\Utils\getRandomNumber;
 use function Brain\Engine\run;
 
 function startGame()
 {
     $manageGame = function () {
         $welcomeMsg = 'Find the greatest common divisor of given numbers.';
-        $firstNumber = getRandomNumber();
-        $secondNumber = getRandomNumber();
+        $firstNumber = rand();
+        $secondNumber = rand();
         $expression = "{$firstNumber} {$secondNumber}";
-        $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber);
+        $correctAnswer = calculateDenom($firstNumber, $secondNumber);
 
         return [
             'expression' => $expression,
@@ -22,11 +21,6 @@ function startGame()
     };
 
     run($manageGame);
-}
-
-function getCorrectAnswer(string $firstNumber, string $secondNumber): int
-{
-    return calculateDenom($firstNumber, $secondNumber);
 }
 
 function calculateDenom(string $firstNumber, string $secondNumber): int

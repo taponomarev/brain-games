@@ -2,7 +2,6 @@
 
 namespace Brain\Games\BrainProgression;
 
-use function Brain\Utils\getRandomNumber;
 use function Brain\Engine\run;
 
 function startGame()
@@ -26,17 +25,17 @@ function getProgression(): array
     $progressionMinLength = 5;
     $progressionMaxLength = 15;
     $stepMinLength = 1;
-    $stepMaxNLength = 10;
-    $progressionSymbol = '..';
+    $stepMaxLength = 10;
+    $hiddenSymbol = '..';
 
-    $step = getRandomNumber($stepMinLength, $stepMaxNLength);
-    $progressionLength = getRandomNumber($progressionMinLength, $progressionMaxLength);
-    $progressionFirstNumber = getRandomNumber();
-    $progressionLastNumber = ($progressionLength * $step) + ($progressionFirstNumber - $step);
+    $step = rand($stepMinLength, $stepMaxLength);
+    $progressionLength = rand($progressionMinLength, $progressionMaxLength);
+    $progressionFirstNumber = rand($progressionMinLength, $progressionMaxLength);
+    $progressionLastNumber = ($progressionLength - 1) * $step + $progressionFirstNumber;
     $progression = range($progressionFirstNumber, $progressionLastNumber, $step);
-    $randIdx = getRandomNumber(0, count($progression) - 1);
+    $randIdx = rand(0, count($progression) - 1);
     $randNumber = $progression[$randIdx];
-    $progression[$randIdx] = $progressionSymbol;
+    $progression[$randIdx] = $hiddenSymbol;
 
     return [
         implode(" ", $progression),

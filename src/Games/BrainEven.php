@@ -2,14 +2,13 @@
 
 namespace Brain\Games\BrainEven;
 
-use function Brain\Utils\getRandomNumber;
 use function Brain\Engine\run;
 
 function startGame()
 {
     $manageGame = function () {
         $welcomeMsg = 'Answer "yes" if the number is even, otherwise answer "no".';
-        $expression = getRandomNumber();
+        $expression = rand();
         $correctAnswer = getCorrectAnswer($expression);
 
         return [
@@ -22,12 +21,12 @@ function startGame()
     run($manageGame);
 }
 
-function hasEven(string $number)
+function isEven(string $number)
 {
     return $number % 2 === 0;
 }
 
 function getCorrectAnswer(string $number): string
 {
-    return hasEven($number) ? 'yes' : 'no';
+    return isEven($number) ? 'yes' : 'no';
 }

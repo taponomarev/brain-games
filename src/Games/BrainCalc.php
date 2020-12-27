@@ -4,7 +4,6 @@ namespace Brain\Games\BrainCalc;
 
 use Exception;
 
-use function Brain\Utils\getRandomNumber;
 use function Brain\Engine\run;
 
 function startGame()
@@ -29,8 +28,8 @@ function getRandomExpression(): array
 {
     $operations = ['+', '-', '*'];
 
-    $firstNumber = getRandomNumber();
-    $secondNumber = getRandomNumber();
+    $firstNumber = rand();
+    $secondNumber = rand();
     $operation = $operations[rand(0, count($operations) - 1)];
 
     return [$firstNumber, $secondNumber, $operation];

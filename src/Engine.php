@@ -5,73 +5,39 @@ namespace Brain\Engine;
 use function cli\line;
 use function cli\prompt;
 use function cli\err;
-use function Brain\Data\getMaxLevel;
 
-function run($game)
+function run(callable $game)
 {
-    $isGameOver = false;
 
-    line('Welcome to the Brain Games!');
-    $name = prompt('May I have your name?');
-    line("Hello, %s!", $name);
-
-    $rounds = getMaxLevel();
-    $maxLevel = getMaxLevel();
-
-    while ($rounds && !$isGameOver) {
-        ['expression' => $expression, 'correctAnswer' => $correctAnswer, 'welcomeMsg' => $welcomeMsg] = $game();
-
-        if ($rounds === $maxLevel) {
-            showWelcomeMessage($welcomeMsg);
-        }
-
-        $isGameOver = askQuestion($expression, $correctAnswer);
-        $rounds--;
-    }
-
-    !$isGameOver ? winGame($name) : gameOver($name);
+	line('Welcome to the Brain Games!');
+	$username = prompt('May I have your name?');
+	line("Hello, %s!", $username);
+	tickGame($game, $username);
 }
 
-function askQuestion(string $expression, string $correctAnswer): bool
+function tickGame(callable $game, string $username, int $currentLevel = 3)
 {
-    $userAnswer = prompt("Question: {$expression}");
-    $errorMsg = "'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'";
+	if (!$currentLevel) {
+		line("Congratulations, {$username}");
+		return;
+	}
 
-    if (checkAnswersToMatch($userAnswer, $correctAnswer)) {
-        showSuccessMessage();
-        return false;
-    } else {
-        showErrorMessage($errorMsg);
-        return true;
-    }
-}
+	$maxLevel = 3;
+	['expression' => $expression, 'correctAnswer' => $correctAnswer, 'welcomeMsg' => $welcomeMsg] = $game();
 
-function checkAnswersToMatch(string $userAnswer, string $correctAnswer): bool
-{
-    return $userAnswer == $correctAnswer;
-}
+	if ($currentLevel === $maxLevel) {
+		line($welcomeMsg);
+	}
 
-function showWelcomeMessage(string $message)
-{
-    line($message);
-}
+	$userAnswer = prompt("Question: {$expression}");
+	$errorMsg = "'{$userAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'";
 
-function showSuccessMessage(string $message = 'Correct!')
-{
-    line($message);
-}
-
-function showErrorMessage(string $message)
-{
-    err($message);
-}
-
-function winGame(string $userName)
-{
-    line("Congratulations, {$userName}");
-}
-
-function gameOver(string $userName)
-{
-    line("Let's try again, {$userName}!");
+	if ($userAnswer == $correctAnswer) {
+		line('Correct!');
+		tickGame($game, $username, $currentLevel -= 1);
+	} else {
+		err($errorMsg);
+		err("Let's try again, {$username}!");
+		return;
+	}
 }
