@@ -8,7 +8,7 @@ const DESCRIPTION = 'Answer "yes" if the number is even, otherwise answer "no".'
 
 function startGame()
 {
-    $params = function () {
+    $getParams = function () {
         $expression = rand();
         $correctAnswer = getCorrectAnswer($expression);
 
@@ -18,7 +18,7 @@ function startGame()
         ];
     };
 
-    run($params, DESCRIPTION);
+    run($getParams, DESCRIPTION);
 }
 
 function isEven(string $number): bool

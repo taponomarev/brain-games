@@ -8,7 +8,7 @@ const DESCRIPTION = 'Find the greatest common divisor of given numbers.';
 
 function startGame()
 {
-    $params = function () {
+    $getParams = function () {
         $minNumber = 1;
         $maxNumber = 100;
         $firstNumber = rand($minNumber, $maxNumber);
@@ -22,7 +22,7 @@ function startGame()
         ];
     };
 
-    run($params, DESCRIPTION);
+    run($getParams, DESCRIPTION);
 }
 
 function calculateDenom(string $firstNumber, string $secondNumber): int
