@@ -8,7 +8,7 @@ const DESCRIPTION = 'Answer "yes" if given number is prime. Otherwise answer "no
 
 function startGame()
 {
-    $params = function () {
+    $getParams = function () {
         $minPrimeNumber = 1;
         $maxPrimeNumber = 50;
         $expression = rand($minPrimeNumber, $maxPrimeNumber);
@@ -21,7 +21,7 @@ function startGame()
         ];
     };
 
-    run($params, DESCRIPTION);
+    run($getParams, DESCRIPTION);
 }
 
 function isPrime(string $number): bool

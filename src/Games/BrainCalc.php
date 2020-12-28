@@ -10,7 +10,7 @@ const DESCRIPTION = 'What is the result of the expression?';
 
 function startGame()
 {
-    $params = function () {
+    $getParams = function () {
         [$firstNumber, $secondNumber, $operation] = getRandomExpression();
         $expression = "{$firstNumber} {$operation} {$secondNumber}";
         $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber, $operation);
@@ -21,7 +21,7 @@ function startGame()
         ];
     };
 
-    run($params, DESCRIPTION);
+    run($getParams, DESCRIPTION);
 }
 
 function getRandomExpression(): array
