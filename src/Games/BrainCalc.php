@@ -11,7 +11,7 @@ const DESCRIPTION = 'What is the result of the expression?';
 function startGame()
 {
     $getParams = function () {
-        [$firstNumber, $secondNumber, $operation] = getRandomExpression();
+        [$firstNumber, $secondNumber, $operation] = getExpressionParams();
         $expression = "{$firstNumber} {$operation} {$secondNumber}";
         $correctAnswer = getCorrectAnswer($firstNumber, $secondNumber, $operation);
 
@@ -24,7 +24,7 @@ function startGame()
     run($getParams, DESCRIPTION);
 }
 
-function getRandomExpression(): array
+function getExpressionParams(): array
 {
     $operations = ['+', '-', '*'];
 
@@ -40,13 +40,10 @@ function getCorrectAnswer(string $firstNumber, string $secondNumber, string $ope
     switch ($operation) {
         case '+':
             return $firstNumber + $secondNumber;
-            break;
         case '-':
             return $firstNumber - $secondNumber;
-            break;
         case '*':
             return $firstNumber * $secondNumber;
-            break;
         default:
             throw new Exception("Unknown operation state: '{$operation}'!");
     }
