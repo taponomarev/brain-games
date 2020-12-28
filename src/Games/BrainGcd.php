@@ -14,7 +14,7 @@ function startGame()
         $firstNumber = rand($minNumber, $maxNumber);
         $secondNumber = rand($minNumber, $maxNumber);
         $expression = "{$firstNumber} {$secondNumber}";
-        $correctAnswer = findMaxDevisor($firstNumber, $secondNumber);
+        $correctAnswer = findGreatestCommonDivisor($firstNumber, $secondNumber);
 
         return [
             'expression' => $expression,
@@ -25,7 +25,7 @@ function startGame()
     run($getParams, DESCRIPTION);
 }
 
-function findMaxDevisor(string $firstNumber, string $secondNumber): int
+function findGreatestCommonDivisor(string $firstNumber, string $secondNumber): int
 {
     $minNumberSize = $firstNumber < $secondNumber ? $firstNumber : $secondNumber;
     $denom = 1;
