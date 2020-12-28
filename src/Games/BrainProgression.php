@@ -9,7 +9,7 @@ const DESCRIPTION = 'What number is missing in the progression?';
 function startGame()
 {
     $getParams = function () {
-        [$expression, $correctAnswer] = getProgression();
+        [$expression, $correctAnswer] = getProgressionParams();
 
         return [
             'expression' => $expression,
@@ -20,7 +20,7 @@ function startGame()
     run($getParams, DESCRIPTION);
 }
 
-function getProgression(): array
+function getProgressionParams(): array
 {
     $progressionMinLength = 5;
     $progressionMaxLength = 15;
